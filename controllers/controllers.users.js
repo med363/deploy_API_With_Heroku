@@ -1,6 +1,10 @@
 const req = require("express/lib/request");
 const User = require("../modules/user.schema");
 module.exports = {
+  GetMessage: (req,res) => {
+    res.send('hello from heroku')
+  }
+  
   GetUsers: (req, res) => {
     User.find()
       .then((users) => {
