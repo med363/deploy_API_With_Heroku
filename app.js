@@ -25,4 +25,8 @@ mongoose.connect(process.env.Mongo_url, { useNewUrlParser: true, useUnifiedTopol
     console.log('failed connection', err)
 })
 
+app.listen(process.env.Port, ()=>{
+    console.log(`connetion on port ${process.env.Port}`);
+})
+
 module.exports = app;
