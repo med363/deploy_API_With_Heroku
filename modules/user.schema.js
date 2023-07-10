@@ -7,8 +7,14 @@ const mongoose = require('mongoose')
 
 // })
 const userSchema = mongoose.Schema({
-        fullName: String,
-        phone: String,
+        fullName: {
+            type: String,
+            required: true,
+        },
+        phone: {
+            type: String,
+            required: [ true, "+216"]
+        },
         email: String,
         password: String,
         is_active: { type: Boolean, default: false },

@@ -34,6 +34,7 @@ module.exports = {
       fullName: req.body.fullName,
       phone: req.body.phone,
       email: req.body.email,
+      password: req.body.password,
       is_active: req.body.is_active,
       is_verified: req.body.is_verified,
     });
@@ -70,10 +71,10 @@ module.exports = {
     User.findByIdAndUpdate(
       req.params.id,
       {
-        fistName: req.body.firstName,
-        lastName: req.body.lasName,
-        email: req.body.email,
+        fullName: req.body.fullName,
         phone: req.body.phone,
+        email: req.body.email,
+        password: req.body.password,
         is_active: req.body.is_active,
         is_Verivfied: req.body.isVerified,
       },
