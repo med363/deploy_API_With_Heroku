@@ -1,5 +1,7 @@
 import 'package:crud_app/models/product_model.dart';
+import 'package:crud_app/product_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class ProductList  extends StatefulWidget {
   const ProductList({super.key});
@@ -45,7 +47,18 @@ class _ProductListState extends State<ProductList> {
               
             },
             child: const Text("Add Product"),
-            )
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return ProductItem(
+                  model: products[index],
+                  onDelete: (ProductModel model) {},
+                );
+              },)
         ],
       ),
     );
