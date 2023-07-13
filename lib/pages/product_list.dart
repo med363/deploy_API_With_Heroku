@@ -1,3 +1,4 @@
+import 'package:crud_app/api_service.dart';
 import 'package:crud_app/models/product_model.dart';
 import 'package:crud_app/product_item.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,14 @@ class _ProductListState extends State<ProductList> {
   @override
   void initState(){
     super.initState();
-    products.add(
-      ProductModel(
-        id: "1",
-        productName: "prod1",
-        productImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
-        productPrice: 500
-      ),
-    );
+    // products.add(
+    //   ProductModel(
+    //     id: "1",
+    //     productName: "prod1",
+    //     productImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+    //     productPrice: 500
+    //   ),
+    // );
   }
   Widget ProductList(products){
     return SingleChildScrollView(
@@ -72,7 +73,26 @@ class _ProductListState extends State<ProductList> {
         elevation: 0,
       ),
       backgroundColor: Color.fromARGB(180, 122, 120, 120),
-      body: ProductList(products),
+      body: loadProducts(),
+    );
+  }
+
+  //cree widged to load data
+    Widget loadProducts() {
+    return FutureBuilder(
+      future: APIservie.getProducts(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<List<ProductModel>?> model,
+      ) {
+        if (model.hasData) {
+          return ProductList(model.data);
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
