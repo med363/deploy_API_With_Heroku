@@ -69,7 +69,11 @@ class ProductItem  extends StatelessWidget {
                       child: const Icon(
                         Icons.edit
                       ),
-                      onTap: () {},
+                      //add arg in navigate page
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/edit-product',
+                            arguments: {'model': model});
+                      },
                       ),
                     GestureDetector(
                       child: const Icon(

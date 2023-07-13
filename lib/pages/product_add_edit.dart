@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:crud_app/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
@@ -14,8 +15,11 @@ class ProductAddEdit extends StatefulWidget {
 }
 
 class _ProductAddEditState extends State<ProductAddEdit> {
+  ProductModel? productModel;
   static final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool isAPICallProcess = false;
+  bool isEditMode = false;
+  bool isImageSelected = false;
   @override
   Widget build(BuildContext context) {
     return 
@@ -35,6 +39,21 @@ class _ProductAddEditState extends State<ProductAddEdit> {
         ),
       ),
     );
+  }
+
+    @override
+  void initState() {
+    super.initState();
+    productModel = ProductModel();
+
+    Future.delayed(Duration.zero, () {
+      if (ModalRoute.of(context)?.settings.arguments != null) {
+        final Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+        productModel = arguments['model'];
+        isEditMode = true;
+        setState(() {});
+      }
+    });
   }
 
 Widget productForm() {
@@ -59,7 +78,11 @@ Widget productForm() {
 
                 return null;
               },
-              (onSavedVal) => {},
+              (onSavedVal) => {
+              productModel!.productName = onSavedVal, 
+              },
+              initialValue: productModel!.productName ?? "",
+              obscureText: false,
               borderFocusColor: Colors.black,
               borderColor: Colors.black,
               textColor: Colors.black,
@@ -84,7 +107,13 @@ Widget productForm() {
 
                 return null;
               },
-              (onSavedVal) => {    },
+              (onSavedVal) => { 
+                productModel!.productPrice = int.parse(onSavedVal),          
+                 },
+              initialValue: productModel!.productPrice == null
+                  ? ""
+                  : productModel!.productPrice.toString(),
+              obscureText: false,
               borderFocusColor: Colors.black,
               borderColor: Colors.black,
               textColor: Colors.black,
@@ -95,7 +124,19 @@ Widget productForm() {
             ),
           ),
           //appel de widget
-          picPicker(false,"",(file){}),
+          picPicker(
+            isImageSelected,
+            productModel!.productImage ?? "",
+            (file) => {
+              setState(
+                () {
+                  //model.productPic = file.path;
+                  productModel!.productImage = file.path;
+                  isImageSelected = true;
+                },            
+          ),
+            },
+          ),
           const SizedBox(
             height: 20,
           ),
