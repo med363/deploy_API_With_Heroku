@@ -141,13 +141,29 @@ Widget productForm() {
             height: 20,
           ),
           //cree submit button
-          Center(child: FormHelper.submitButton("save",() {},
+          Center(child: FormHelper.submitButton(
+            "save",
+            () {
+            if (valudateAndSave()){
+              //API service
+
+            }
+          },
           btnColor: HexColor("#283B71"),
           borderColor: Colors.white,
           borderRadius: 10),)
         ],
       )
     );
+}
+
+bool valudateAndSave(){
+  final form = globalKey.currentState;
+  if (form!.validate()){
+    form.save();
+    return true;
+  }
+  return false;
 }
 
 //widget for image and two botton to upload image on wich src
