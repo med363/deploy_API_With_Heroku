@@ -44,7 +44,7 @@ class _ProductListState extends State<ProductList> {
               )
             ),
             onPressed: () {
-              
+              Navigator.pushNamed(context, "/add-product");              
             },
             child: const Text("Add Product"),
             ),
